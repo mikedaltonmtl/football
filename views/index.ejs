@@ -11,7 +11,34 @@
 
   <body>
     <main>
-test change more changes
+      <section id="selection">
+        <h3><%= team.name %></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Name</th>
+              <th>Value</th>
+              <th>Drop</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const position of posArray) { %>
+            <tr>
+              <td><%= position %></td>
+              <td><%= team[position] ? team[position].name : 'please select' %></td>
+              <td><%= team[position] ? team[position].value : '$...' %></td>
+              <td>
+                <form method="POST" action="/<%= // id %>?_method=DELETE">
+                  <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </section>
+
     </main>
   </body>
 </html>

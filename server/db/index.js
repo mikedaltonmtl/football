@@ -1,22 +1,22 @@
 require('dotenv').config({ path: './.env' });
-const Client = require('pg').Client;
-
 
 const user = process.env.USERNAME || 'vagrant';
 const password = process.env.PASSWORD || '123';
 const host = process.env.HOST || 'localhost';
-const database = process.env.DATABASE || 'football';
-const port = process.env.PORT;
+const database = process.env.DATABASE || 'lightbnb';
 
-const client = new Client({
+// Create pool to connect to lightbnb database
+const { Pool } = require('pg');
+
+const pool = new Pool({
   user,
   password,
   host,
-  database,
-  port
+  database
 });
 
-// Establish a connection to the specified database
-client.connect();
-
-module.exports = { client };
+module.exports = {
+  query: (text, params) => {
+    return pool.query(text, params);
+  }
+};

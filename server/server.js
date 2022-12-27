@@ -14,6 +14,8 @@ require('dotenv').config({ path: './.env' });
 ///////////////////////////////////////////////////////////////////////
 
 // const { getAllVillains, getVillain } = require('./data/villain-queries');
+const footballQueries = require('./queries');
+const { getTeam } = footballQueries;
 
 ///////////////////////////////////////////////////////////////////////
 // Express / Config
@@ -27,7 +29,6 @@ const app = express();
 ///////////////////////////////////////////////////////////////////////
 
 app.set('view engine', 'ejs');
-// app.set('trust proxy', 1);
 app.use(morgan('dev'));
 
 ///////////////////////////////////////////////////////////////////////
@@ -42,7 +43,29 @@ app.listen(PORT, () => {
 // Routes
 ///////////////////////////////////////////////////////////////////////
 
+/*
+const team = {
+  name: 'All Stars',
+  GK: { name: 'BobGK', value: 10},
+  RB: { name: 'BobRB', value: 15},
+  RCB: { name: 'BobRCB', value: 20},
+  LCB: { name: 'BobLCB', value: 22},
+  LB: { name: 'BobLB', value: 18},
+  // RM: { name: 'BobRM', value: 24},
+  CM: { name: 'BobCM', value: 26},
+  LM: { name: 'BobLM', value: 30},
+  RF: { name: 'BobRF', value: 40},
+  CF: { name: 'BobCF', value: 45},
+  LF: { name: 'BobLF', value: 50},
+};
+*/
+
+const posArray = ['GK', 'RB', 'RCB', 'LCB', 'LB', 'RM', 'CM', 'LM', 'RF', 'CF', 'LF'];
+
 app.get('/', (req, res) => {
-  // res.end('Hello, World!');
-  res.render("index");
+
+  const team = getTeam();
+
+  const templateVars = { team, posArray };
+  res.render("index", templateVars);
 });

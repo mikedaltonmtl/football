@@ -100,5 +100,6 @@ VALUES
 (61, 'M'), (62, 'F'), (63, 'F'), (64, 'G'), (65, 'M'), (66, 'M'), (67, 'M'), (68, 'M'), (69, 'F'),
 (70, 'L'), (71, 'F'), (72, 'L'), (73, 'F'), (74, 'C'), (75, 'R');
 
-INSERT INTO teams (name)
-VALUES ('All Stars');
+-- Create an example team to test
+INSERT INTO teams (name, GK, RB, RCB, LCB, LB, RM, CM, LM, RF, CF, LF)
+VALUES ('All Stars', 34, 5, 57, 42, 72, 7, 30, 32, 48, 8, 62);
