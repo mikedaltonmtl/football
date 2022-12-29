@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
-    <title>footie project</title>
 
+    <link rel="stylesheet" href="./styles/main.css" type="text/css" />
+    <title>footie project</title>
   </head>
 
   <body>
     <main>
       <section id="selection">
-        <h3><%= team.name %></h3>
+        <h3>Lineup:</h3>
         <table>
           <thead>
             <tr>
               <th>Position</th>
+              <th>Initial</th>
               <th>Name</th>
+              <th>Team</th>
               <th>Value</th>
-              <th>Drop</th>
+              <th>...</th>
             </tr>
           </thead>
           <tbody>
             <% for (const position of posArray) { %>
             <tr>
               <td><%= position %></td>
+              <td><%= team[position] ? team[position].initial : '' %></td>
               <td><%= team[position] ? team[position].name : 'please select' %></td>
+              <td><%= team[position] ? team[position].club : '' %></td>
               <td><%= team[position] ? team[position].value : '$...' %></td>
               <td>
-                <form method="POST" action="/<%= // id %>?_method=DELETE">
-                  <button type="submit" class="btn btn-outline-danger">Delete</button>
+                <form method="POST" action="/<%= // id %>?_method=UPDATE">
+                  <button type="submit" class="btn btn-outline-danger">Drop</button>
                 </form>
               </td>
             </tr>
@@ -39,6 +43,49 @@
         </table>
       </section>
 
+      <section id="search">
+        <div id="searchHeader">
+          <h3>Available players:</h3>
+          <form action="">
+            <select name="players" id="players">
+              <option value="G">Goalkeepers</option>
+              <option value="R">Right-backs</option>
+              <option value="C">Center-backs</option>
+              <option value="L">Left-backs</option>
+              <option value="M">Midfielders</option>
+              <option value="F" selected="selected">Forwards</option>
+            </select>
+          </form>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Initial</th>
+              <th>Name</th>
+              <th>Team</th>
+              <th>Value</th>
+              <th>...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const reserve of reserves) { %>
+              <tr>
+                <td><%= searchBy %></td>
+                <td><%= reserve.initial %></td>
+                <td><%= reserve.name %></td>
+                <td><%= reserve.club %></td>
+                <td><%= reserve.value %></td>
+                <td>
+                  <form method="POST" action="/<%= // id %>?_method=UPDATE">
+                    <button type="submit" class="btn btn-outline-danger">Call Up</button>
+                  </form>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </section>
     </main>
   </body>
 </html>

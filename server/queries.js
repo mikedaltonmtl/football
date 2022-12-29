@@ -2,18 +2,13 @@ const db = require('./db/index');
 
 
 const getTeam = function() {
-  const posArray = ['GK', 'RB', 'RCB', 'LCB', 'LB', 'RM', 'CM', 'LM', 'RF', 'CF', 'LF'];
-  const queryString = `SELECT * from teams;`;
-
-  console.log('queryString:', queryString);
+  const queryString = `SELECT * FROM players WHERE selected_position IS NOT NULL;`;
 
   return db
-    // .query(queryString, data)
     .query(queryString)
     .then((result) => {
       if (result.rows) {
-        console.log('result:', result.rows[0]);
-        return result.rows[0];
+        return result.rows;
       } else {
         return null;
       }
@@ -23,8 +18,34 @@ const getTeam = function() {
     });
 };
 
+const searchPlayers = function(position) {
+
+  const queryString = `
+    SELECT players.* FROM players
+    JOIN positions ON players.id = positions.player_id
+    WHERE positions.position = '${position}'
+    ORDER BY players.value DESC;`
+
+    // console.log('queryString', queryString);
+
+  return db
+    .query(queryString)
+    .then((result) => {
+      // console.log('result', result.rows);
+      if (result.rows) {
+        return result.rows;
+      } else {
+        return null;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
 module.exports = {
-  getTeam
+  getTeam,
+  searchPlayers
 };
 
   /*
